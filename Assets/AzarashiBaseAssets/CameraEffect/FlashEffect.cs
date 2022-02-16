@@ -10,6 +10,7 @@ class FlashEffect : MonoBehaviour
     {
         GameObject go = new GameObject("Flash");
         go.AddComponent<FlashEffect>();
+       // Debug.Break();
     }
 
     void Awake()

@@ -14,7 +14,7 @@ public class AzarashiController : MonoBehaviour
     public float relativeVelocityX;
     public GameObject sprite;
 
-    public bool Isdead()
+    public bool IsDead()
     {
         return isDead;
     }
@@ -35,13 +35,15 @@ public class AzarashiController : MonoBehaviour
 
         //angle が水平以上だったら、アニメーターのflapフラグをtrueにする
         animator.SetBool("flap", angle >= 0.0f && !isDead);
-        
+
     }
     public void Flap()
     {
-       
+
         //死んだらはばたけない
         if (isDead) return;
+        //重力が効いていない時は操作しない
+        if (rb2d.isKinematic) return;
         //velocity を調節書き換え上方向に加速
         rb2d.velocity = new Vector2(0.0f, flapVelocity);
     }
@@ -73,7 +75,14 @@ public class AzarashiController : MonoBehaviour
     {
         if (isDead) return;
 
+        Camera.main.SendMessage("Clash");
+
         //何かにぶつかったら死亡フラグを立てる。
         isDead = true;
+
+    }
+    public void SetSteerActive(bool active)
+    {
+        rb2d.isKinematic = !active;
     }
 }
